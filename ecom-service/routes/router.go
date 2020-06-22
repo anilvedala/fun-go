@@ -19,6 +19,9 @@ func InitRoutes()  {
 	// GET all items
 	router.GET("/items", controller.HandleGetAllItems)
 
+	// User
+	router.GET("/users/:userId", controller.HandleGetUser)
+
 	// running the server at the port number 8080
 	router.Run(":8080")
 
