@@ -2,7 +2,9 @@ package service
 
 import (
 	"github.com/fun-go/ecom-service/database"
+	"github.com/fun-go/ecom-service/dto/request"
 	"github.com/fun-go/ecom-service/dto/response"
+	"github.com/fun-go/ecom-service/mapper"
 )
 
 func GetUserInformation(userId string) (*response.UserResponse, error) {
@@ -25,5 +27,22 @@ func GetUserInformation(userId string) (*response.UserResponse, error) {
 	}
 
 	return userResponse, nil
+
+}
+
+func CreateUser(request *request.UserCreationRequest) (*response.UserCreationResponse, error) {
+
+	userModel, err := mapper.MapUserRequestToModel(request)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = database.SaveUserDetails(userModel);
+	if err != nil {
+		return nil, err
+	}
+
+	return &response.UserCreationResponse{UserId: userModel.Id}, nil
 
 }

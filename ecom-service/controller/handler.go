@@ -3,12 +3,13 @@ package controller
 import (
 	"github.com/fun-go/ecom-service/constants"
 	errors "github.com/fun-go/ecom-service/dto/error"
+	"github.com/fun-go/ecom-service/dto/request"
 	"github.com/fun-go/ecom-service/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-var HandleGetAllItems = func(context *gin.Context){
+var HandleGetAllItems = func(context *gin.Context) {
 
 	itemsResponse, err := service.GetAllItemsInStore()
 	if err != nil {
@@ -21,7 +22,7 @@ var HandleGetAllItems = func(context *gin.Context){
 
 }
 
-var HandleGetUser = func(context *gin.Context){
+var HandleGetUser = func(context *gin.Context) {
 	userId := context.Param(constants.UserIdPathParamKey)
 	usersResponse, err := service.GetUserInformation(userId)
 
@@ -36,4 +37,22 @@ var HandleGetUser = func(context *gin.Context){
 	}
 
 	context.JSON(http.StatusOK, usersResponse)
+}
+
+var HandleCreateUser = func(context *gin.Context) {
+
+	var userCreationRequest *request.UserCreationRequest
+	if err := context.ShouldBindJSON(&userCreationRequest); err != nil {
+		context.JSON(http.StatusBadRequest, errors.ErrorResponse{
+			ErrorMessage: constants.DeserializationErrorMessage,
+		})
+	}
+
+	userCreationResponse, err := service.CreateUser(userCreationRequest)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, errors.ErrorResponse{ErrorMessage: err.Error()})
+	}
+
+	context.JSON(http.StatusCreated, userCreationResponse)
+
 }

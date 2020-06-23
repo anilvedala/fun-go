@@ -1,6 +1,9 @@
 package database
 
-import "github.com/fun-go/ecom-service/models"
+import (
+	"errors"
+	"github.com/fun-go/ecom-service/models"
+)
 
 var usersData  map[string]models.User
 
@@ -17,5 +20,16 @@ func GetUserDetails(userId string) models.User {
 	}
 
 	return user
+}
+
+func SaveUserDetails(user models.User) error {
+
+	if usersData == nil {
+		return errors.New("user data store is not yet initialised")
+	}
+
+	usersData[user.Id] = user
+
+	return nil
 }
 

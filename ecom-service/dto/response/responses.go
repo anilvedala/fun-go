@@ -32,3 +32,7 @@ type UserResponse struct {
 	BillingAddress string   `json:"billing_address"`
 	signUpDate     time.Time `json:"sign_up_date"`
 }
+
+type UserCreationResponse struct {
+	UserId string `json:"user_id"`
+}
