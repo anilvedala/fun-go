@@ -34,5 +34,20 @@ type User struct {
 	Addresses      []string
 	BillingAddress string
 	Orders         []string
-	signUpDate  time.Time
+	signUpDate     time.Time
+}
+
+type Order struct {
+	OrderId         string
+	UserId          string
+	DeliveryAddress string
+	BillingAddress  string
+	ItemOrders      []ItemOrder
+}
+
+type ItemOrder struct {
+	Id string `json:"id",validate:"required"`
+	Name string `json:"name",validate:"required"`
+	Quantity int `json:"quantity",validate:"required"`
+	SellerId   string `json:"seller_id"`
 }

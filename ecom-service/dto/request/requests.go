@@ -17,8 +17,8 @@ type ItemRequest struct {
 	SellerId   string `json:"seller_id"`
 }
 
-type OrderRequest struct {
-
+type OrderCreationRequest struct {
+	UserId string `json:"user_id"`
 	Items []ItemRequest `json:"items"`
 	DeliveryAddress string `json:"delivery_address"`
 	BillingAddress string `json:"billing_address"`

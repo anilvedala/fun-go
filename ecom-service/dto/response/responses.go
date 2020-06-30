@@ -36,3 +36,9 @@ type UserResponse struct {
 type UserCreationResponse struct {
 	UserId string `json:"user_id"`
 }
+
+type OrderCreationResponse struct {
+	OrderId string `json:"order_id"`
+	createdAt int64 `json:"created_at"`
+	UserId string  `json:"user_id"`
+}

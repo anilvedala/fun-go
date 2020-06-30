@@ -33,4 +33,32 @@ func MapUserRequestToModel(request *request.UserCreationRequest) (models.User, e
 
 }
 
+func MapOrderRequestToModel(request *request.OrderCreationRequest, orderId string) (models.Order, error) {
+
+	if request == nil {
+		return models.Order{}, errors.New("received empty request")
+	}
+
+	itemOrdersRequest := request.Items
+	itemOrders := make([]models.ItemOrder, len(itemOrdersRequest))
+
+	for index, itemOrderRequest := range itemOrdersRequest {
+		itemOrder := models.ItemOrder{
+			Id:       itemOrderRequest.Id,
+			Name:     itemOrderRequest.Name,
+			Quantity: itemOrderRequest.Quantity,
+			SellerId: itemOrderRequest.SellerId,
+		}
+		itemOrders[index] = itemOrder
+	}
+
+	return models.Order{
+		OrderId: orderId,
+		UserId: request.UserId,
+		BillingAddress: request.BillingAddress,
+		DeliveryAddress: request.DeliveryAddress,
+		ItemOrders: itemOrders,
+	}, nil
+}
+
 

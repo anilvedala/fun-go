@@ -25,7 +25,8 @@ func InitRoutes()  {
 
 	router.GET("/users/:userId", controller.HandleGetUser)
 
-
+	//Order
+	router.POST("/orders", controller.HandleCreateOrder)
 
 	// running the server at the port number 8080
 	router.Run(":8080")

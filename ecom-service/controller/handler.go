@@ -56,3 +56,20 @@ var HandleCreateUser = func(context *gin.Context) {
 	context.JSON(http.StatusCreated, userCreationResponse)
 
 }
+
+var HandleCreateOrder = func(context *gin.Context) {
+
+	var orderCreationRequest *request.OrderCreationRequest
+	if err := context.ShouldBindJSON(&orderCreationRequest); err != nil {
+		context.JSON(http.StatusBadRequest, errors.ErrorResponse{
+			ErrorMessage: constants.DeserializationErrorMessage,
+		})
+	}
+
+	orderCreationResponse, err := service.CreateOrder(orderCreationRequest)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, errors.ErrorResponse{ErrorMessage: err.Error()})
+	}
+
+	context.JSON(http.StatusCreated, orderCreationResponse)
+}
