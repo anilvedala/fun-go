@@ -57,6 +57,22 @@ var HandleCreateUser = func(context *gin.Context) {
 
 }
 
+var HandleGetOrdersOfUser = func(context *gin.Context){
+
+	userId := context.Param(constants.UserIdPathParamKey)
+	if userId == "" {
+		context.JSON(http.StatusBadRequest, errors.ErrorResponse{ErrorMessage: "User Id should not be blank"})
+	}
+
+	userOrdersResponse, err := service.GetOrdersOfUser(userId)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, errors.ErrorResponse{ErrorMessage: err.Error()})
+	}
+
+	context.JSON(http.StatusCreated, userOrdersResponse)
+
+}
+
 var HandleCreateOrder = func(context *gin.Context) {
 
 	var orderCreationRequest *request.OrderCreationRequest

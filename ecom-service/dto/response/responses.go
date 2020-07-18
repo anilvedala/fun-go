@@ -38,7 +38,26 @@ type UserCreationResponse struct {
 }
 
 type OrderCreationResponse struct {
-	OrderId string `json:"order_id"`
-	createdAt int64 `json:"created_at"`
-	UserId string  `json:"user_id"`
+	OrderId   string `json:"order_id"`
+	createdAt int64  `json:"created_at"`
+	UserId    string `json:"user_id"`
+}
+
+type UserOrdersResponse struct {
+	UserId string                  `json:"user_id"`
+	Orders []OrderDetailsResponse `json:"orders"`
+}
+
+type OrderDetailsResponse struct {
+	OrderId         string `json:"order_id"`
+	Items           []ItemInOrderResponse `json:"items"`
+	Status          string `json:"status"`
+	DeliveryAddress string `json:"delivery_address"`
+	BillingAddress  string `json:"billing_address"`
+}
+
+type ItemInOrderResponse struct {
+	ItemId   string `json:"item_id"`
+	Quantity int    `json:"quantity"`
+	Name     string `json:"name"`
 }

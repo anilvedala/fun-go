@@ -46,3 +46,22 @@ func CreateUser(request *request.UserCreationRequest) (*response.UserCreationRes
 	return &response.UserCreationResponse{UserId: userModel.Id}, nil
 
 }
+
+func GetOrdersOfUser(userId string) (*response.UserOrdersResponse, error) {
+
+	user := database.GetUserDetails(userId)
+	if user.Id == "" {
+		return nil, nil
+	}
+
+	orderIds := user.Orders
+
+	orderDetails := database.GetOrderDetails(orderIds)
+
+	return &response.UserOrdersResponse{
+		UserId: userId,
+		Orders: mapper.MapOrderModelToOrderResponse(orderDetails),
+	}, nil
+
+
+}

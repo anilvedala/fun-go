@@ -22,3 +22,19 @@ var SaveOrder = func(order models.Order) error {
 
 	return nil
 }
+
+var GetOrderDetails = func(orderIds []string) []models.Order {
+
+	orderDetails := make([]models.Order, len(orderIds))
+
+	numOrdersFound := 0
+
+	for _, orderId := range orderIds {
+		if order, ok := orders[orderId]; ok {
+			orderDetails[numOrdersFound] = order
+			numOrdersFound++
+		}
+	}
+
+	return orderDetails[:numOrdersFound]
+}

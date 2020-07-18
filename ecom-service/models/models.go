@@ -43,6 +43,7 @@ type Order struct {
 	DeliveryAddress string
 	BillingAddress  string
 	ItemOrders      []ItemOrder
+	Status 			string
 }
 
 type ItemOrder struct {

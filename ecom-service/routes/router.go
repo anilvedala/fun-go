@@ -23,6 +23,8 @@ func InitRoutes()  {
 	// User
 	router.POST("/users", controller.HandleCreateUser)
 
+	router.GET("/users/:userId/orders", controller.HandleGetOrdersOfUser)
+
 	router.GET("/users/:userId", controller.HandleGetUser)
 
 	//Order
